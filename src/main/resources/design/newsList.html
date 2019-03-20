@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公告列表</title>
+    <link href="../static/css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <script src="../static/jquery/jquery.js"></script>
+    <script src="../static/jquery/bootstrap.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">公告列表</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">选课列表</a></li>
+                <li><a href="#">已选课程</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    个人中心
+                    <b class="caret"></b>
+                </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">修改密码</a></li>
+                        <li><a href="#">修改个人信息</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">退出登录</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">另一个分离的链接</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="container">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>标题</th>
+            <th>内容</th>
+            <th>发布人</th>
+            <th>发布时间</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+    <ul class="pagination pagination-lg " style="position: relative;left: 38%;">
+        <li><a href="#">Prev</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">Next</a></li>
+    </ul>
+</div>
+</body>
+</html>

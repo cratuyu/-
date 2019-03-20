@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上选课管理系统</title>
+    <link href="../static/css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <script src="../static/jquery/jquery.js"></script>
+    <script src="../static/jquery/bootstrap.js"></script>
+</head>
+<body style="padding: 0;margin: 0;">
+    <img src="timg1.jpg" style="width: 100%;height :100% ;position:absolute;z-index:-1">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" url="/welcome" href="javascript:void(0)">公告列表</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a url="/welcome" href="javascript:void(0)">学生选课信息</a></li>
+
+                    <li><a href="#">选课列表</a></li>
+                    <li class="dropdown">
+                        <a url="/welcome" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                            个人中心
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a url="/welcome" href="javascript:void(0)">修改密码</a></li>
+                            <li><a url="/welcome" href="javascript:void(0)">修改个人信息</a></li>
+                            <li class="divider"></li>
+                            <li><a url="/welcome" href="javascript:void(0)">退出登录</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="page-wrapper" style="width: 100%;bottom:0px;flex:1;margin-top: 60px">
+        <iframe  marginheight="0" marginwidth="0" frameborder="0" scrolling="no" width="100%"
+                 height="100%"
+                 id="iframecon" name="iframepage" onLoad="iFrameHeight();">
+        </iframe>
+    </div>
+</body>
+<script>
+    function iFrameHeight() {
+        var ifm = document.getElementById("iframecon");
+        var subWeb = document.frames ? document.frames["iframepage"].document
+            : ifm.contentDocument;
+        if (ifm != null ) {
+            if(subWeb !=null){
+                ifm.height = subWeb.body.scrollHeight;
+            }
+        }
+    }
+</script>
+</html>
