@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 /**
  * Company: www.leadmap.net

@@ -1,12 +1,4 @@
-package Test;
-
-import sun.util.resources.LocaleData;
-
-import java.text.Format;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+package test;
 
 /**
  * Company: www.leadmap.net

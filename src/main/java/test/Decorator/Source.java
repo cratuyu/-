@@ -1,4 +1,4 @@
-package Test.Decorator;
+package test.Decorator;
 
 /**
  * Company: www.leadmap.net

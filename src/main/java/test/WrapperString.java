@@ -1,12 +1,5 @@
-package Test;
+package test;
 
-import org.springframework.data.repository.core.support.MethodLookup;
-
-import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.spi.Invoker;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.sql.Wrapper;
 import java.util.HashSet;
 
 /**
