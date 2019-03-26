@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author: 96964
  * @Date: 2019/2/28 10:52
  */
-public class DateTest {
+public class ThreadTest {
     public static void main(String[] args){
         new Thread(() -> {
             try {
