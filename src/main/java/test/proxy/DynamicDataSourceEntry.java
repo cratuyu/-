@@ -1,4 +1,4 @@
-package test.Proxy;
+package test.proxy;
 
 /**
  * Company: www.leadmap.net

@@ -1,0 +1,385 @@
+﻿静态方法中不可以使用this关键字
+静态方法中不可以调用非静态方法
+
+注解拥有功能是因为有实现类 通过反射实现注解的功能 给注解注入灵魂
+
+类的主方法
+主方法是静态的, 所以如果要在主方法中调用其他方法 则该方法必须也是静态的
+主方法没有返回值
+主方法的形参为数组. 其中args[0]~args[n] 分别代表 主方法中的第一个参数 到第n个参数
+可以用args.length获取参数个数
+
+java 垃圾回收机制
+1. 对象引用超过其作用范围, 这个对象将被视为垃圾
+2. 将对象赋值为null
+虽然垃圾回收机制已经很完善，但垃圾回收器只能回收那些由new操作符创建的
+对象。如果某些对象不是通过new操作符在内存中获取块内存区域， 这种对象
+可能不能被垃圾回收机制所识别， 所以在Java中提供了一个finalize()方法。
+这个方法是Object类的方法，它被声明为protected,用户可以在自己的类中定义
+这个方法。如果用户在类中定义了finalize(方法， 在垃圾回收时会首先调用该
+方法，在下一次垃圾回收动作发生时，才能真正回收被对象占用的内存。
+
+java 中的 包装类
+所有数字类的父类 Number
+Integer Long Short Boolean Byte Character Double Float
+
+组合字符串过程中 String是不可变长的对象,在每一次改变字符串长度时都会创建一个新的
+String对象, 而StringBuffer则是可变的字符序列, 类似于String的字符串缓冲区
+所以在字符串经常修改的地方使用StringBuffer, 其效率将高于String
+
+Integer构造方法
+Integer number = new Integer(7);
+Integer number = new Integer("45")；
+
+Integer对象.byteValue() 返回值是byte 以byte类型返回该Integer的值
+Integer对象1.compareTo(Integer对象2) 相等返回0  对象1小于对象2返回负 大于返回正
+Integer对象1.equals(Integer对象2) boolean 比较此对象与指定的对象是否相等
+intValue()  以int 型返回此对象
+shortValue() 以short型返回此对象
+toString 返回一个表示该 Integer值得String对象
+类.valueOf(String str) 返回保存指定的String值的Integer对象  返回值 Integer对象
+类.parseInt(String str) 返回包含在 str指定的字符串中的数字等价的值  返回值 int
+Integer类提供了以下4个常量。
+MAX VALUE:  表示int类型可取的最大值，即231-1。
+MIN VALUE:  表示int 类型可取的最小值，即-231。
+SIZE:  用来以二进制补码形式表示int值的位数。
+TYPE:  表示基本类型int的Class实例。
+
+其他基本数字类型 常用方法 与以上基本一致
+
+常用的数学运算方法 在 Math类中找
+
+Math.random()方法
+产生随机数字
+这个方法随机产生 大于等于0.0 且小于1.0的double型随机数
+
+Ramdom类  java.util.Random
+Random r = new Random();
+public int nextInt(int n): 返回大于等0且小于n的随机整数
+public long nextLong(): 返回一个随机长整型值
+public boolean nextBoolean(): 返回一个随机布尔型值
+public float nextFloat(): 返回一个随机双精度型值
+public double nextGaussian():返回一个概率密度为高斯分布的双精度值
+
+BigInteger 和 BigDecimal 都能实现大数字的运算
+public BigInteger(String val)
+public BigDecimal(String val)
+public BigDecimal(double val)
+除加减乘除外 还有一些常用方法
+
+在类的继承中 当重写父类方法时, 修改方法的修饰权限只能从小的范围到大的范围改变
+,例如,父类中的doSomething()方法的修饰权限为protected, 集成后子类中的方法
+doSomethin()的修饰权限只能修改为public, 不能修改为private
+
+Object类
+Object类中主要包括clone() finalize() equals() toString() 等方法
+由于所有的类都是Object类的子类, 所以任何类都可以重写Object类中的方法
+Object类中的getClass() notify() notifyAll() wait()等方法不能被重写,
+因为这些方法被定义为 final类型
+getClass()方法返回对象执行时的Class实例
+
+向上转型 子类到父类
+子类对象总是父类的一个实例 但父类对象不一定是子类的实例
+向下转型时 必须使用显式类型转换 , 向编译器指明将父类对象转换为哪一种子类对象
+将父类对象赋予子类对象, 这种写法是错误的
+将父类对象赋予子类对象, 并强制转换为子类型, 这种写法是正确的
+
+instanceof 关键字 判断某对象是否属于一个类 也常判断 父类对象是否为子类对象的实例
+对象 instanceof 类
+
+参数类型不同, 构成重载
+参数个数不同, 构成重载
+参数顺序不同, 构成重载
+
+定义不定长参数方法
+public static int add(int... a){
+    int s = 0;
+    for(int i = 0;i<a.length;i++)
+        s += a[i];
+    return s;
+}
+
+三大特性之多态
+多态就是指程序中定义的引用变量所指向的具体类型和通过该引用变量发出的方法
+调用在编程时并不确定，而是在程序运行期间才确定，即一个引用变量倒底会指向
+哪个类的实例对象，该引用变量发出的方法调用到底是哪个类中实现的方法，必须
+在由程序运行期间才能决定。因为在程序运行时才确定具体的类，这样，不用修改
+源程序代码，就可以让引用变量绑定到各种不同的类实现上，从而导致该引用调用
+的具体方法随之改变，即不修改程序代码就可以改变程序运行时所绑定的具体代码
+，让程序可以选择多个运行状态，这就是多态性
+指向子类的父类引用由于向上转型了，它只能访问父类中拥有的方法和属性，
+而对于子类中存在而父类中不存在的方法，该引用是不能使用的，尽管是重载
+该方法。若子类重写了父类中的某些方法，在调用该些方法的时候，必定是使
+用子类中定义的这些方法（动态连接、动态调用）。
+
+抽象类  abstract 定义抽象类或者抽象方法的关键字
+声明一个抽象的方法 承载这个抽象方法的类就必须定义为抽象类,不可能在非抽象类中
+获取抽象方法. 换句话说, 只要类中有一个抽象方法, 此类就被标记为抽象类
+
+接口
+public interface drawTest{
+    void draw(); // 接口内的方法, 省略 abstract关键字
+}
+public: 接口可以像类一样被权限修饰符修饰, 但public关键字仅限用于接口在
+与其同名的文件中被定义 在接口重定义的方法必须被定义为public或abstract形式
+其他修饰权限不被Java编译器认可, 即使不将该方法声明为public形式, 它也是public
+在街口中定义的任何字段都自动是 static 和 final 的.
+interface: 定义接口关键字.
+drawTest: 接口名称.
+
+final 修饰的常量并非真的不可变,在对象中的变量 当初始化一个新的对象时, 变量就有可能改变
+但用final static 修饰的常量 在程序运行中才是真的不变
+
+使用private final 修饰的方法 子类中 可以写同名方法 但实际 不是在重写 而是写了一个新方法
+
+静态内部类:
+如果创建静态内部类的对象, 不需要其外部类的对象
+不能从静态内部类的对象中访问非静态外部类的对象
+
+进行程序测试时 , 如果在每一个Java文件中都设置一个主方法, 将出现很多额外代码, 而程序本身并不需要这些主方法,
+为了解决这个问题, 可以将主方法写入静态内部类中
+
+内部类继承
+在某个类继承内部类时, 必须硬性给予这个类一个带参数的构造方法, 并且该构造方法的参数为需要
+继承内部类的外部类的引用, 同时在构造方法体中使用 参数.super语句, 这样才为继承提供了必要的对象引用
+
+Collection
+add(E e)  将指定的对象添加到该集合中
+remove(Object o) 将指定的对象从该集合中移除
+isEmpty()  返回boolean值, 用于判断当前集合是否为空
+iterator()  返回在此Collection的元素上进行迭代的迭代器. 用于遍历集合中的对象
+size() 返回int型值, 获取该集合中元素的个数  // 见MusterCollection
+
+List 接口 的实现类
+List接口的常用实现类有ArrayList 与LinkedList
+ArrayList类实现了可变的数组, 允许保存所有元素, 包括null, 并可以根据索引位置对集合
+进行快速的随机访问; 缺点是向指定的索引位置插入对象或删除对象的速度较慢. ArrayList适合查找
+LinkedList类采用链表结构保存对象. 这种结构的优点是便于向集合中插入和删除对象, 需要
+向集合中插入 删除对象时, 使用LinkedList 类实现的List集合的效率较高; 但对于随机访问集合中
+插入 删除对象时 使用 LinkedList 类实现的List集合的效率较高, 但对于随机访问集合中的对象,
+使用LinkedList类List集合的效率较低 LinkedList适合增删操作多
+
+set 集合 不能包含重复对象 必须小心操作可变对象(Mutable Object) 如果一个Set 中的可变元素
+改变了自身状态 导致 Object.equals(Object) = true 则会出现一些问题
+HashSet类实现Set接口, 由哈希表(实际上是一个HashMap实例)支持, 它不保证Set的迭代顺序
+特别是它不保证该顺序恒久不变. 此类允许使用null元素
+TreeSet类 不仅实现了 Set接口, 还实现了 java.util.SortedSet接口, 因此, TreeSet类实现的
+Set 集合 在遍历集合时按照自然顺序递增排序, 也可以按照指定比较器递增排序, 既可以通过比较器
+对用TreeSet类实现的Set集合中的对象进行排序.
+first() 返回此Set中当前第一个(最低) 元素
+last() 返回此Set中当前最后一个(最高) 元素
+comparator() 返回对此Set中的元素 进行排序的比较器. 如果此Set使用自然顺序, 则返回null
+headSet(E toElement) 返回一个新的Set集合, 新集合是toElement(不包含)之前的所有对象
+subSet(E fromElement, E fromElement) 返回一个新的Set集合, 是fromElement(包含)对象与
+fromElement(不包含)对象之间的所有对象
+tailSet(E fromElement) 返回一个新的Set集合, 新集合包含对象fromElement(包含)之后的所有对象
+
+Map集合 没有继承Collection接口, 其提供的是key到value的映射. Map 中不能包含相同的key
+每个key只能映射一个value. key还决定了 存储对象在映射中的存储位置, 但不是由key对象
+本身决定的, 而是通过一种"散列技术"进行处理, 产生一个散列码中的存储位置,但不是由
+key对象本身决定的, 而是通过一种"散列技术"进行处理, 产生一个散列码的整数值. 散列码
+通常用作一个偏移量, 该偏移量对应分配给映射的内存区域的起始位置, 从而确定存储对象
+在映射中的存储位置. Map集合包括Map接口以及Map接口的所有实现类.
+常用方法:
+put(K key, V value)  向集合中添加指定的key与value的映射关系
+containsKey(Object key) 如果此映射包含指定key的映射关系 则返回true
+containsValue(Object value) 如果此映射将一个或多个key映射到指定值, 则返回true
+get(Object key) 如果存在指定的key对象,则返回该对象对应的值, 否则返回null
+keySet()  返回该集合中的所有key对象形成的Set集合
+values()  返回该集合中所有值对象形成的Collection集合
+
+HashMap类是基于哈希表的Map接口的实现, 此实现提供所有可选的映射操作, 并允许使用null值和
+null键, 但必须保证键的唯一性. HashMap通过哈希表对其内部的映射关系进行快速查找. 此类不保证
+映射的顺序, 特别是它不保证该顺序恒久不变
+TreeMap类不仅实现了Map接口, 还实现了 java.util.SortedMap接口 , 因此, 集合中的映射关系
+具有一定的顺序. 但在添加 删除和定位映射关系时, TreeMap类比 HashMap类 性能稍差. 由于TreeMap
+类实现的Map集合中的映射关系是根据键对象按照一定的顺序排列的, 因此不允许键对象是null
+TreeMap类实现的Map集合, 键对象升序
+
+输入输出流
+java中的输入流的含义是将硬盘中的资源 输入到缓冲buffer中
+输出流则是 将缓冲buffer中的数据输出到 硬盘中
+InputStream是字节输入流的抽象类, 是所有字节输入流的父类.
+Reader 是字符输入流的抽象类, ....字符...
+OutputStream是字节输出流的抽象类, ...
+Writer是字符输出流的子类
+输入流常用方法
+read()方法:从输入流中读取数据的下一个字节. 返回0~255范围内的int字节值. 如果因为
+已经到达流末尾而没有可用的字节, 则返回值为-1
+read(byte[] b): 从输入流中读入一定长度的字节, 并以整数的形式返回字节数
+mark(int readlimit)方法: 在输入流的当前位置放置一个标记, readlimit参数告知此输入流在
+标记位置失效之前允许读取的字节数
+reset()方法: 将输入指针返回到当前所做的标记处
+skip(long n)方法: 跳过输入流上的n个字节并返回实际跳过的字节数
+markSupported()方法: 如果当前流支持 mark()/reset()操作就返回true
+close 方法: 关闭此输入流 并释放与该流关联的所有系统资源
+skip()mark()reset()等方法 只对某些子类有用
+输出流常用方法:
+write(int b)方法: 将指定的字节写入此输出流
+write(byte[] b)方法: 将b个字节从指定的byte数组写入此输出流
+write(byte[] b,int off, int len)方法: 将指定byte数组中从偏移量off开始的len个字节写入此输出流
+flusht()方法: 彻底完成输出并清空缓存区
+close()方法: 关闭输出流
+
+文件创建及删除
+File file = new File("d:/1.txt");
+File file = new File(String parent, String child) parent 父路径字符串 D:/ 或D:/doc
+FIle file = new File(File f, String child) f:父路径对象. 例如, D:/doc/  child 子路径字符串
+在Windows 平台, 包含盘符的路径名前缀由驱动器号和一个":"组成. 如果路径名是绝对路径名, 还可能后跟 "\\".
+
+File类对象通过调用createNewFile()方法创建一个名称为word.txt的文件
+也可以调用delete()方法将其删除
+
+获取文件信息
+方法               返回值                说明
+getName()          String               判断文件的名称
+canRead()          boolean              判断文件是否为可读的
+canWrite()         boolean              判断文件是否可被写入
+exits()            boolean              判断文件或者目录是否存在
+length()           long                 获取文件的长度(以字节为单位)
+getAbsolutePath()  String               获取文件的父路径
+getParent()        String               获取文件的父路径
+isFile()           boolean              判断文件是否为标准文件
+isDirectory        boolean              判断路径表示的是否为一个目录
+isHidden()         boolean              判断文件是否为隐藏文件
+lastModified()     long                 获取文件最后修改时间
+
+FileInputStream 与 FileOutputStream 类
+常用构造方法
+FileInputStream(String name) 使用给定的文件名name 创建一个FileInputStream对象
+FileInputStream(File file)  使用File对象创建FileInputStream对象
+
+java中的反射 可以在程序中访问已经装载到JVM中的Java对象的描述, 实现访问 检测
+和修改描述 Java对象本身信息的功能. Java反射机制的功能十分强大, 在java.lang.reflect包中
+提供了对该功能的支持.  访问构造方法、成员变量、方法 具体代码 见 入门到精通16章
+
+Annotation 用于类 构造方法 成员变量 方法 参数等的声明中 该功能不影响程序的运行, 但是会对
+编译器警告等辅助工具产生影响
+定义Annotation类型时 在interface关键字前加一个"@"符号
+public @interface OneMemberAnnotation{
+    String value();
+}
+String 成员类型  可用的川成元类型 有String Class primitive enumerated 和annotation 以及
+所列类型的数组
+value: 成员名称 如果在所定义的Annotation类型中只包含一个成员 通常将名称命名为value
+定义Annotation类型时, 还可以通过Annotation类型@Target 来设置Annotation类型适用的程序元素
+种类. 如果未设置@Target 则表示适用于所有程序元素
+@Retention 可以设置 Annotation的有效范围. 枚举类RetentionPolicy中的枚举常量用来设置@Retention
+如果未设置@Retention, Annotation的有效范围为枚举常量CLASS表示的范围
+详见 入门到精通16章
+
+InetAddress 是与IP地址相关的类, 利用该类可以获取IP地址 主机地址等信息
+创建InetAddress对象 可直接 InetAddress ip;
+getByName(String host) InetAddress  获取与Host相对应的InetAddress对象
+getHostAddress()       String       获取InetAddress 对象所包含的IP地址
+getHostName()          String       获取此IP地址的主机名
+getLocalHost()         InetAddress  返回本地主机的InetAddress对象
+见 src.demo.Address
+
+java.net包中的ServerSocket 类用于表示服务器套接字, 其主要功能是等待来自网络上的请求
+它可通过制定的端口来等待连接的套接字. 服务器套接字一次可以与一个套接字连接. 如果多台
+客户机同时提出连接请求, 服务器套接字会将请求连接的可户籍存入队列中, 然后从中取出一个套接字
+与服务器新建的套接字连接起来. 若请求连接数大于最大容纳数, 则多出的连接请求被拒绝. 队列
+的默认大小是50
+ServerSocket(): 创建非绑定到特点端口的服务器套接字.
+ServerSocket(int port): 创建绑定到特定端口的服务器套接字
+ServerSocket(int port,int backlog): 利用指定的backlog 创建服务器套接字并将其绑定到
+指定的本地端口号
+ServerSocket(int port, int backlog, InetAddress bindAddress): 使用指定的端口 侦听
+backlog和要绑定的本地IP地址创建服务器. 这种情况使用与计算机中有多块网卡和多个IP地址的
+情况, 用于可以明确规定ServerSocket在哪块网卡或IP地址上等待客户的连接请求
+accept()  返回值:   Socket   等待客户机的连接. 若连接, 则创建一连接套接字
+isBound()           boolean    判断ServerSocket的绑定状态
+getInetAddress()    InetAddress  返回此服务器套接字的本地地址
+isClosed()          boolean     返回服务器套接字的关闭状态
+close()             void        关闭服务器套接字
+bind(SocketAddress endpoint) void   将ServerSocket绑定到特定地址 (IP地址和端口号)
+getInetAddress()    int          返回服务器套接字等待的端口号
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

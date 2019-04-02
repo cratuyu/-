@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.example.dao.TbBooksDao">
+    <resultMap id = "TbBooks" type = "com.example.entity.TbBooks">
+        <result property = "id" column = "id"/>
+        <result property = "bookName" column = "book_name"/>
+        <result property= "price" column="price"/>
+        <result property= "author" column="author"/>
+        <result property= "bookCount" column="book_count"/>
+    </resultMap>
+
+    <select id="findBooksByAuthor" resultMap="TbBooks">
+        select * from tb_books where author = #{author}
+    </select>
+
+    <select id="findBookById" resultMap="TbBooks">
+        select * from tb_books where id = #{id}
+    </select>
+</mapper>

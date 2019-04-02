@@ -1,0 +1,88 @@
+1. 注册数据库驱动
+      连接数据库前, 需要将数据库厂商提供的数据库驱动类注册到JDBC的驱动管理器中.
+      通常情况下, 是通过将数据库驱动类加载到JVM来实现的
+  加载数据库驱动, 注册到驱动管理器 代码如下
+    Class.forName("com.mysql.jdbc.Driver")
+2. 构建数据库连接URL:
+      要建立数据库连接，就要构建数据库连接的URL,这个URL由数据库厂商制定，不同的数据库，
+      它的URL也有所区别，但都符合一个基本的格式，即“JDBC协议+IP地址或域名+端口+数据库名称”。
+      如MySQL的数据库连接URL的字符串为“jdbc:mysq://localhost:3306/test"。
+3. 获取Connection对象:
+      在注册了数据库驱动及构建数据库URL后，就可以通过驱动管理器获取数据库的连接Connction。
+      Connection对象是JDBC封装的数据库连接对象，只有创建此对象后，才可以对数据进行相关操作，
+  它的获取方法如下:
+    DriverManager.getConnection(url,username,password);
+  Connection对象的获取需要用到DriverManager对象，DriverManager的getConnection()方法通过数据库连接URL、
+  数据库用户名及数据库密码创建Connection对象。
+
+Connection接口
+Connection接口位于java.sql包中, 是与特定数据库的连接会话, 只有获得特定数据库
+的连接对象, 才能访问数据库, 操作数据库中的数据表 视图和存储过程等 方法详见 javaweb 10.2.1
+createStatement()  创建Statement对象
+createStatement(int resultSetType,ResultSetint resultSetConcurrency)
+创建一个Statement对象，该对象将生成具有给定类型、并发性和可保存性的对象
+preparedStatement()  创建预处理对象preparedStatement
+isReadOnly()  查看当前Connection对象的读取模式是否为只读形式
+setReadOnly()  设置当前Connection对象的读写模式，默认是非只读模式
+commit()  使所有上一次提交/回滚后进行的更改成为持久更改，并释放此Connection对象当前
+      持有的所有数据库锁
+roolback()  取消在当前事务中进行的所有更改，并释放此Connection对象当前持有的所有数据库锁
+close()  立即释放此Connection对象的数据库和JDBC资源，而不是等待它们被自动释放
+
+Statement接口
+execute(String sql)  执行静态的SELECT语句，该语句可能返回多个结果集
+executeQuery(String sql)  执行给定的SQL语句，该语句返回单个ResultSet 对象
+clearBatch()  清空此Statement对象的当前SQL命令列表
+executeBatch()   将一批命令提交给数据库来执行，如果全部命令执行成功，则返回更新计数组成的
+      数组。数组元素的排序与SQL语句的添加顺序对应
+addBatch(String sql)   将给定的SQL命令添加到此Statement对象的当前命令列表中。如果驱动程序不支
+      持批量处理，将抛出异常
+close()  释放Statement实例占用的数据库和JDBC资源
+
+PreparedStatement接口
+setInt(int index，int k)  将指定位置的参数设置为int值
+setFloat(int index，float f)  将指定位置的参数设置为float值
+setLong(int index,long 1)  将指定位置的参数设置为long值
+setDouble(int index，double d)  将指定位置的参数设置为double值
+setBoolean(int index ,boolean b)  将指定位置的参数设置为boolean值
+setDate(int index，date date)  将指定位置的参数设置为对应的date值
+executeQuery()  在此PreparedStatement对象中执行SQL查询，并返回该查询生成的ResultSet对象
+setString(int index String s)  将指定位置的参数设置为对应的String值
+setNull(int index，intsqlType)  将指定位置的参数设置为SQLNULL
+executeUpdate()  执行前面包含的参数的动态INSERT、UPDATE或DELETE语句
+clearParameters()  清除当前所有参数的值
+
+DriverManage类
+getConnection(String url, String user, String password)  指定3个入口参数(依次是连接数据库的URL, 用户名, 密码)
+  来获取与数据库的连接
+setLoginTimeout()  获取驱动程序试图登录到某一数据库时可以等待的最长时间, 以秒为单位
+println(String message) 将一条消息打印到当前JDBC日志流中
+
+ResultSet接口 类似于一个临时表, 用来暂时存放数据库查询操作所获得的结果集. ResultSet
+实例具有指向数据行的指针, 指针开始的位置在第一条记录的前面, 通过next()方法可将指针
+向下移  详见 java入门20.3.5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

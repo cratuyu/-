@@ -15,7 +15,7 @@ public class TbBooks implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @Column(name = "name")
+  @Column(name = "bookName")
   private String name;
 
   @Column(name = "price")

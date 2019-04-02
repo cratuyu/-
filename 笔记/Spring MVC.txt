@@ -1,0 +1,189 @@
+矩阵变量可以在任何路径段落中出现，每对矩阵变量之间使用一个分号“;”隔开。
+比如这样的URI： "/cars;color=red;year=2012" 。多个值可以用逗号隔开 "color=red,green,blue" ，
+或者重复变量名多次 "color=red;color=green;color=blue"
+
+如果一个URL有可能需要包含矩阵变量，那么在请求路径的映射配置上就需要使用URI模板来体现这一点。
+这样才能确保请求可以被正确地映射，而不管矩阵变量在URI中是否出现、出现的次序是怎样
+
+// GET /pets/42;q=11;r=22
+
+@RequestMapping(path = "/pets/{petId}", method = RequestMethod.GET)
+public void findPet(@PathVariable String petId, @MatrixVariable int q)
+    {
+      // petId == 42
+      // q == 11
+}
+
+由于任意路径段落中都可以含有矩阵变量，在某些场景下，你需要用更精确的信息来指定一个矩阵变量的位
+
+// GET /owners/42;q=11/pets/21;q=22
+
+@RequestMapping(path = "/owners/{ownerId}/pets/{petId}", method = RequestMethod.GET)
+public void findPet(
+    @MatrixVariable(name="q", pathVar="ownerId") int q1,
+    @MatrixVariable(name="q", pathVar="petId") int q2) 
+     {
+       // q1 == 11
+       // q2 == 22
+}
+
+也可以通过一个Map来存储所有的矩阵变量：
+// GET /owners/42;q=11;r=12/pets/21;q=22;s=23
+
+@RequestMapping(path = "/owners/{ownerId}/pets/{petId}", method = RequestMethod.GET)
+public void findPet(
+    @MatrixVariable Map<String, String> matrixVars,
+    @MatrixVariable(pathVar="petId") Map<String, String> petMatrixVars) 
+    {
+      // matrixVars: ["q" : [11,22], "r" : 12, "s" : 23]
+      // petMatrixVars: ["q" : 11, "s" : 23]
+}
+
+@CookieValue注解映射cookie值
+@CookieValue 注解能将一个方法参数 与一个HTTP cookie的值进行绑定.
+
+@RequestMapping("/displayHeaderInfo.do")
+public void displayHeaderInfo(@CookieValue("JSESSIONID") String cookie) {
+	//...
+}
+
+
+@RequestHeader注解映射请求头属性
+
+@RequestMapping("/displayHeaderInfo.do")
+public void displayHeaderInfo(@RequestHeader("Accept-Encoding") String encoding,
+@RequestHeader("Keep-Alive") long keepAlive) {
+	//...
+}
+
+可消费的媒体类型
+
+你可以指定一组可消费的媒体类型，缩小映射的范围。这样只有当请求头中
+ Content-Type 的值与指定可消费的媒体类型中有相同的时候，请求才会被匹配。比如下面这个例
+
+@Controller@RequestMapping(path = "/pets", method = RequestMethod.POST, consumes="application/json")
+public void addPet(@RequestBody Pet pet, Model model) {
+	// 方法实现省略
+}
+
+指定可消费媒体类型的表达式中还可以使用否定，比如，可以使用 !text/plain 来匹配所有请求头 
+Content-Type 中不含 text/plain 的请求。同时，在 MediaType 类中还定义了一些常量，
+比如 APPLICATION_JSON_VALUE 、 APPLICATION_JSON_UTF8_VALUE 等，推荐更多地使用
+
+
+可生产的媒体类型
+
+你可以指定一组可生产的媒体类型，缩小映射的范围。这样只有当请求头中 Accept 的值与指
+定可生产的媒体类型中有相同的时候，请求才会被匹配。而且，使用 produces 条件可以确保
+用于生成响应（response）的内容与指定的可生产的媒体类型是相同的。举个例子：
+
+@Controller@RequestMapping(path = "/pets/{petId}", method = RequestMethod.GET, 
+produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@ResponseBody
+public Pet getPet(@PathVariable String petId, Model model) {
+	// 方法实现省略
+}
+
+
+支持的方法参数类型
+  下面列出所有支持的方法参数类型:
+	请求或响应对象（Servlet API）。可以是任何具体的请求或响应类型的对象，比
+	如， ServletRequest 或 HttpServletRequest 对象等。
+	
+	HttpSession 类型的会话对象（Servlet API）。使用该类型的参数将要求这样一个
+	session的存在，因此这样的参数永不为 null 。
+	
+	org.springframework.web.context.request.WebRequest 或 org.springframework.web.context
+	.request.NativeWebRequest 。允许存取一般的请求参数和请求/会话范围的属性
+	（attribute），同时无需绑定使用Servlet/Portlet的API
+	
+	当前请求的地区信息 java.util.Locale ，由已配置的最相关的地区解析器解析得到。在
+	MVC的环境下，就是应用中配置的 LocaleResolver 或 LocaleContextResolver
+	
+	与当前请求绑定的时区信息 java.util.TimeZone （java 6以上的版
+	本）/ java.time.ZoneId （java 8），由 LocaleContextResolver 解析得到
+	
+	用于存取请求正文的 java.io.InputStream 或 java.io.Reader 。该对象与通过Servlet API
+	拿到的输入流/Reader是一样的
+	
+	用于生成响应正文的 java.io.OutputStream 或 java.io.Writer 。该对象与通过Servlet
+	API拿到的输出流/Writer是一样的
+	
+	org.springframework.http.HttpMethod 。可以拿到HTTP请求方法
+	包装了当前被认证用户信息的 java.security.Principal
+
+	带 @PathVariable 注解的方法参数，其存放了URI模板变量中的值。
+	带 @MatrixVariable 注解的方法参数，其存放了URI路径段中的键值对。详见“矩阵变量”
+	带 @RequestParam 注解的方法参数，其存放了Servlet请求中所指定的参数。参数的值会被转换成方法参数所声明的类型。
+	带 @RequestHeader 注解的方法参数，其存放了Servlet请求中所指定的HTTP请求头的值。
+	参数的值会被转换成方法参数所声明的类型。详见“使用@RequestHeader注解映射请求
+	头属性”一节
+	
+	带 @RequestBody 注解的参数，提供了对HTTP请求体的存取。参数的值通
+	过 HttpMessageConverter 被转换成方法参数所声明的类型。详见“使用@RequestBody注
+	解映射请求体”一节"
+	
+	带 @RequestPart 注解的参数，提供了对一个"multipart/form-data请求块（request part）内容的存取。
+	HttpEntity<?> 类型的参数，其提供了对HTTP请求头和请求内容的存取。请求流是通过 HttpMessageConverter 被转换成entity对象的.
+
+	java.util.Map / org.springframework.io.Model / org.springframework.ui.ModelMap 类型的参数，用以增强默认暴露给视图层的模型(model)的
+	
+	org.springframework.web.servlet.mvc.support.RedirectAttributes 类型的参数，用以指定重定向下要使用到的属性集以及添加flash属性
+	（暂存在服务端的属性，它们会在下次重定向请求的范围中有效）。详见“向重定向请求传递参数”
+
+	命令或表单对象，它们用于将请求参数直接绑定到bean字段（可能是通过setter方法）。
+	你可以通过 @InitBinder 注解和/或 HanderAdapter 的配置来定制这个过程的类型转换。具
+	体请参考 RequestMappingHandlerAdapter 类 webBindingInitializer 属性的文档。这样的命
+	令对象，以及其上的验证结果，默认会被添加到模型model中，键名默认是该命令对象类
+	的类名——比如， some.package.OrderAddress 类型的命令对象就使用属性
+	名 orderAddress 类获取。 ModelAttribute 注解可以应用在方法参数上，用以指定该模型
+	所用的属性名
+
+	org.springframework.validation.Errors / org.springframework.validation.BindingResult
+	验证结果对象，用于存储前面的命令或表单对象的验证结果（紧接其前的第一个方法参数）
+
+	org.springframework.web.bind.support.SessionStatus 对象，用以标记当前的表单处理已
+	结束。这将触发一些清理操作： @SessionAttributes 在类级别注解的属性将被移除
+
+	org.springframework.web.util.UriComponentsBuilder 构造器对象，用于构造当前请求URL
+	相关的信息，比如主机名、端口号、资源类型（scheme）、上下文路径、servlet映射中
+	的相对部分（literal part）等
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -28,5 +28,15 @@ public class ThreadTest {
         }catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("---------------------------------------");
+        new MyThread().start();
+    }
+
+    static class MyThread extends Thread{
+
+        @Override
+        public void run(){
+            System.out.println("通过继承Thread类创建线程的方式");
+        }
     }
 }

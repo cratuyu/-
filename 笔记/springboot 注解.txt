@@ -1,0 +1,546 @@
+
+@SpringBootApplication：包含了@ComponentScan、@Configuration和@EnableAutoConfiguration注解
+。其中@ComponentScan让spring Boot扫描到Configuration类并把它加入到程序上下文。
+
+@Configuration 等同于spring的XML配置文件；使用Java代码可以检查类型安全。
+
+@EnableAutoConfiguration 自动配置。
+
+@ComponentScan 组件扫描，可自动发现和装配一些Bean。
+
+@Component可配合CommandLineRunner使用，在程序启动后执行一些基础任务。
+
+@RestController注解是@Controller和@ResponseBody的合集,表示这是个控制器bean,
+并且是将函数的返回值直接填入HTTP响应体中,是REST风格的控制器。
+
+@Autowired自动导入。
+
+@PathVariable获取参数。
+
+@JsonBackReference解决嵌套外链问题。
+
+@RepositoryRestResourcepublic配合spring-boot-starter-data-rest使用。
+
+
+@ResponseBody：表示该方法的返回结果直接写入HTTP response body中，
+一般在异步获取数据时使用，用于构建RESTful的api。在使用@RequestMapping后
+，返回值通常解析为跳转路径，加上@esponsebody后返回结果不会被解析为跳转路径
+，而是直接写入HTTP response body中。比如异步获取json数据，加上@Responsebody后，
+会直接返回json数据。该注解一般会配合@RequestMapping一起使用。
+
+
+@Controller：用于定义控制器类，在spring项目中由控制器负责将用户发来的URL请求
+转发到对应的服务接口（service层），一般这个注解在类中，通常方法需要配合注解
+@RequestMapping。
+
+
+@RestController：用于标注控制层组件(如struts中的action)，@ResponseBody和
+@Controller的合集
+
+
+@RequestMapping：提供路由信息，负责URL到Controller中的具体函数的映射。
+
+@EnableAutoConfiguration：SpringBoot自动配置（auto-configuration）：尝试
+根据你添加的jar依赖自动配置你的Spring应用。例如，如果你的classpath下存在
+HSQLDB，并且你没有手动配置任何数据库连接beans，那么我们将自动配置一个内
+存型（in-memory）数据库”。你可以将@EnableAutoConfiguration或者
+@SpringBootApplication注解添加到一个@Configuration类上来选择自动配置。
+如果发现应用了你不想要的特定自动配置类，你可以使用
+@EnableAutoConfiguration注解的排除属性来禁用它们。
+
+@ComponentScan：其实很简单，@ComponentScan主要就是定义扫描的路径从中找出
+标识了需要装配的类自动装配到spring的bean容器中,你一定都有用过@Controller
+，@Service，@Repository注解，查看其源码你会发现，他们中有一个共同的注解
+@Component，没错@ComponentScan注解默认就会装配标识了@Controller，@Service.
+@Repository，@Component注解的类到spring容器中。当然，这个的前提就是你需
+要在所扫描包下的类上引入注解。
+
+@Configuration：相当于传统的xml配置文件，如果有些第三方库需要用到xml文件，
+建议仍然通过@Configuration类作为项目的配置主类——可以使用@ImportResource注
+解加载xml配置文件。
+
+@Import：用来导入其他配置类。
+
+@ImportResource：用来加载xml配置文件。
+
+@Autowired：自动导入依赖的bean
+
+@Service：一般用于修饰service层的组件
+
+@Repository：使用@Repository注解可以确保DAO或者repositories提供异常转译，
+这个注解修饰的DAO或者repositories类会被ComponetScan发现并配置，同时也不需要
+为它们提供XML配置项。
+
+@Bean：用@Bean标注方法等价于XML中配置的bean。
+
+@Value：注入Spring boot application.properties配置的属性的值。
+
+@Inject：等价于默认的@Autowired，只是没有required属性；
+
+@Component：泛指组件，当组件不好归类的时候，我们可以使用这个注解进行标注。
+
+@Scope("prototype") 表示每次调用这个Bean时 都会新建一个Bean的实例 Scope里的属性还有 Request Session Singleton
+
+@Bean:相当于XML中的,放在方法的上面，而不是类，意思是产生一个bean,并交给spring管理。
+
+@PostConstruct 和 @PreDestroy 注解:
+  要定义安装和拆卸一个bean，我们只是声明了初始化方法和/或销毁，<bean>方法的参数。在init-method属性指定一个方法，
+  是被称为bean上后立即实例化。同样，销毁规定了被称为bean被从容器中取出之前的方法。
+
+@AutoWired：自动导入依赖的bean。byType方式。把配置好的Bean拿来用，完成属性、方法的组装，
+它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。当加上（required=false）时
+，就算找不到bean也不报错。
+
+@Qualifier：当有多个同一类型的Bean时，可以用@Qualifier(“name”)来指定。与@Autowired配合使用
+。@Qualifier限定描述符除了能根据名字进行注入，但能进行更细粒度的控制如何选择候选者，具体使
+用方式如下：
+
+@Resource(name=”name”,type=”type”)：没有括号内内容的话，默认byName。与@Autowired干类似的事.
+
+
+三 JPA注解
+
+@Entity：@Table(name=”“)：表明这是一个实体类。一般用于jpa这两个注解一般一块使用，但是如果表名
+和实体类名相同的话，@Table可以省略
+
+@MappedSuperClass:用在确定是父类的entity上。父类的属性子类可以继承。
+
+@NoRepositoryBean:一般用作父类的repository，有这个注解，spring不会去实例化该repository。
+
+@Column：如果字段名与列名相同，则可以省略。
+
+@Id：表示该属性为主键。
+
+@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = “repair_seq”)：表示主键生成策略是
+sequence（可以为Auto、IDENTITY、native等，Auto表示可在多个数据库间切换），指定sequence的名字是repair_seq。
+
+@SequenceGeneretor(name = “repair_seq”, sequenceName = “seq_repair”, allocationSize = 1)：name为
+sequence的名称，以便使用，sequenceName为数据库的sequence名称，两个名称可以一致。
+
+@Transient：表示该属性并非一个到数据库表的字段的映射,ORM框架将忽略该属性。如果一个属性并非数据库
+表的字段映射,就务必将其标示为@Transient,否则,ORM框架默认其注解为@Basic。@Basic(fetch=FetchType.LAZY)
+：标记可以指定实体属性的加载方式
+
+@JsonIgnore：作用是json序列化时将Java bean中的一些属性忽略掉,序列化和反序列化都受影响。
+
+@JoinColumn（name=”loginId”）:一对一：本表中指向另一个表的外键。一对多：另一个表指向本表的外键。
+
+@OneToOne、@OneToMany、@ManyToOne：对应hibernate配置文件中的一对一，一对多，多对一。
+
+
+四 SpringMVC注解
+
+@RequestMapping：@RequestMapping(“/path”)表示该控制器处理所有“/path”的URL请求。
+RequestMapping是一个用来处理请求地址映射的注解，可用于类或方法上。
+用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径。该注解有六个属性：
+params:指定request中必须包含某些参数值是，才让该方法处理。
+headers:指定request中必须包含某些指定的header值，才能让该方法处理请求。
+value:指定请求的实际地址，指定的地址可以是URI Template 模式
+method:指定请求的method类型， GET、POST、PUT、DELETE等
+consumes:指定处理请求的提交内容类型（Content-Type），如application/json,text/html;
+produces:指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回
+
+@RequestParam：用在方法的参数前面。
+@RequestParam
+String a = request.getParameter(“a”)。
+
+
+五、全局异常处理
+
+@ControllerAdvice：包含@Component。可以被扫描到。统一处理异常。
+
+@ExceptionHandler（Exception.class）：用在方法上面表示遇到这个异常就执行以下方法。
+
+
+六、项目中具体配置解析和使用环境
+
+@MappedSuperclass：
+1.@MappedSuperclass 注解使用在父类上面，是用来标识父类的
+
+2.@MappedSuperclass 标识的类表示其不能映射到数据库表，因为其不是一个完整的实体类，但是它所拥有
+的属性能够映射在其子类对用的数据库表中
+
+3.@MappedSuperclass 标识的类不能再有@Entity或@Table注解
+
+@Column：
+
+1.当实体的属性与其映射的数据库表的列不同名时需要使用@Column标注说明，该属性通常置于实体的属性声明
+语句之前，还可与 @Id 标注一起使用。
+
+2.@Column 标注的常用属性是name，用于设置映射数据库表的列名。此外，该标注还包含其它多个属性，如：
+unique、nullable、length、precision等。具体如下:
+  1 name属性：name属性定义了被标注字段在数据库表中所对应字段的名称
+  2 unique属性：unique属性表示该字段是否为唯一标识，默认为false，如果表中有一个字段需要唯一标识，则既可以使用该标记，也可以
+  使用@Table注解中的@UniqueConstraint
+  3 nullable属性：nullable属性表示该字段是否可以为null值，默认为true
+  4 insertable属性：insertable属性表示在使用”INSERT”语句插入数据时，是否需要插入该字段的值
+  5 updateable属性：updateable属性表示在使用”UPDATE”语句插入数据时，是否需要更新该字段的值
+  6 insertable和updateable属性：一般多用于只读的属性，例如主键和外键等，这些字段通常是自动生成的
+  7 columnDefinition属性：columnDefinition属性表示创建表时，该字段创建的SQL语句，一般用于通过Entity生成表定义时使用，如果
+  数据库中表已经建好，该属性没有必要使用
+  8 table属性：table属性定义了包含当前字段的表名
+  9 length属性：length属性表示字段的长度，当字段的类型为varchar时，该属性才有效，默认为255个字符
+ 10 precision属性和scale属性：precision属性和scale属性一起表示精度，当字段类型为double时，precision表示数值的总长度，
+ scale表示小数点所占的位数
+    具体如下：
+   1.double类型将在数据库中映射为double类型，precision和scale属性无效
+   2.double类型若在columnDefinition属性中指定数字类型为decimal并指定精度，则最终以columnDefinition为准
+   3.BigDecimal类型在数据库中映射为decimal类型，precision和scale属性有效
+   4.precision和scale属性只在BigDecimal类型中有效
+  3.@Column 标注的columnDefinition属性: 表示该字段在数据库中的实际类型.通常 ORM 框架可以根据属性类型自动判断数据库中字段的类型,但是对于Date类型仍无法确定数据库中字段类型究竟是DATE,TIME还是TIMESTAMP.此外,String的默认映射类型为VARCHAR,如果要将 String 类型映射到特定数据库的 BLOB 或TEXT字段类型.
+
+  4.@Column标注也可置于属性的getter方法之前
+
+@Getter和@Setter（Lombok）
+
+@Setter：注解在属性上；为属性提供 setting 方法 @Getter：注解在属性上；为属性提供 getting 方法
+扩展：
+复制代码
+  1 @Data：注解在类上；提供类所有属性的 getting 和 setting 方法，此外还提供了equals、canEqual、hashCode、toString 方法
+  2 
+  3 @Setter：注解在属性上；为属性提供 setting 方法
+  4 
+  5 @Getter：注解在属性上；为属性提供 getting 方法
+  6 
+  7 @Log4j2 ：注解在类上；为类提供一个 属性名为log 的 log4j 日志对象，和@Log4j注解类似
+  8 
+  9 @NoArgsConstructor：注解在类上；为类提供一个无参的构造方法
+
+ 11 @AllArgsConstructor：注解在类上；为类提供一个全参的构造方法
+
+ 13 @EqualsAndHashCode:默认情况下，会使用所有非瞬态(non-transient)和非静态(non-static)字段来生成equals和hascode方法，
+ 也可以指定具体使用哪些属性。
+
+ 15 @toString:生成toString方法，默认情况下，会输出类名、所有属性，属性会按照顺序输出，以逗号分割。
+
+ 17 @NoArgsConstructor, @RequiredArgsConstructor and @AllArgsConstructor
+ 18 无参构造器、部分参数构造器、全参构造器，当我们需要重载多个构造器的时候，只能自己手写了
+
+ 20 @NonNull：注解在属性上，如果注解了，就必须不能为Null
+ 
+ 22 @val:注解在属性上，如果注解了，就是设置为final类型，可查看源码的注释知道
+
+
+
+
+Spring data JPA 的基本注解
+
+1. @Entity ：修饰实体类，指明该类将映射到指定的数据表，例如：Customer 类默认的数据表名为 customer
+
+2. @Table ：当实体类与映射的数据库表名不同名时需要使用 @Table 注解，该注解与 @Entity 注解并列使用，
+@Table 标注的常用选项是 name，用于指明数据库的表名 @Table标注还有一个两个选项 catalog 和 schema 用于设置表所属的数据库目录或模式，通常为数据库名。
+uniqueConstraints 选项用于设置约束条件，通常不须设置
+
+3. @Id ：@Id 标注用于声明一个实体类的属性映射为数据库的主键列。该属性通常置于属性声明语句之前，可与声明语句同行，也可写在单独行上。 
+@Id标注也可置于属性的getter方法之前。
+
+4. @GeneratedValue ：标注主键的生成策略，通过其 strategy 属性。通常与 @Id 注解一起使用。默认情况下 JPA 会自动选择一个最适合底层数据库
+的主键生成策略，MySQL 默认为 AUTO，常用策略有：
+–IDENTITY：采用数据库 ID自增长的方式来自增主键字段，Oracle 不支持这种方式；
+–AUTO： JPA自动选择合适的策略，是默认选项；
+–SEQUENCE：通过序列产生主键，通过 @SequenceGenerator 注解指定序列名，MySql 不支持这种方式
+–TABLE：通过表产生主键，框架借由表模拟序列产生主键，使用该策略可以使应用更易于数据库移植
+
+5. @Basic ：
+@Basic 表示一个简单的属性到数据库表的字段的映射,对于没有任何标注的 getXxxx() 方法,默认即为@Basic
+@Basic fetch: 表示该属性的读取策略,有 EAGER 和 LAZY 两种,分别表示主支抓取和延迟加载,默认为 EAGER.
+optional:表示该属性是否允许为null, 默认为true
+
+6. @Column ：当实体的属性与其映射的数据表的列不同名时使用,该属性通常置于实体的属性声明语句之前，还可与 @Id 标注一起使用。
+其 name 属性用来指明此属性在数据表中对应的列名；
+unique 属性指明是否为唯一约束；nullable 属性用来指明是否可以为空，false 为不能为空；length 属性指明此列的长度。
+
+@Column 标注的 columnDefinition 属性: 表示该字段在数据库中的实际类型.通常 ORM 框架可以根据属性类型自动判断数据库中字段的类型,
+但是对于Date类型仍无法确定数据库中字段类型究竟是DATE,TIME还是TIMESTAMP.此外,String的默认映射类型为VARCHAR, 如果要将 String 
+类型映射到特定数据库的 BLOB 或TEXT 字段类型.
+@Column标注也可置于属性的getter方法之前
+
+
+7. @Transient ：
+.表示该属性并非一个到数据库表的字段的映射,ORM框架将忽略该属性.
+.如果一个属性并非数据库表的字段映射,就务必将其标示为@Transient,否则,ORM框架默认其注解为@Basic
+
+8. @Temporal ：向数据库映射日期（Date）属性时用来调整映射的精度。Date 类型的数据有 DATE, TIME, 和 TIMESTAMP 
+三种精度(即单纯的日期,时间,或者两者兼备).Birth 属性应该使用 DATE 类型(生日只具体到日即可，如：2015-10-22)，
+而 CreateTime 应该使用 TIMESTAMP 类型(创建时间应该具体到秒，如：2017-10-11 22:39:13)
+
+
+
+@MappedSuperclass的作用
+  在Jpa里, 当我们在定义多个实体类时, 可能会遇到这几个实体类都有几个共同的属性, 这时就会出现很多重复代码.
+  这时我们可以选择编写一个父类,将这些共同属性放到这个父类中, 并且在父类上加上@MappedSuperclass注解.
+注意:标注为@MappedSuperclass的类将不是一个完整的实体类，他将不会映射到数据库表，但是他的属性都将
+映射到其子类的数据库字段中。
+标注为@MappedSuperclass的类不能再标注@Entity或@Table注解，也无需实现序列化接口.
+
+@OneToOne注解只用于关系的发出端，同时定义一个接收端类型的字段属性；
+单向的一对一关系在数据库中是以
+外键的形式被映射的,
+其中关系的发出端存储一个指向关系的接收端的一个外键。
+缺省情况下这个外键的字段名称，
+是以它指向的表的名称加下划线“_”加“ID”组成的。
+当然我们也可以根据我们的喜好来修改这个字段，修改的办
+法就是使用 @JoinColumn 这个注解
+
+# targetEntity属性表示默认关联的实体类型，默认为当前标注的实体类；
+
+# cascade属性表示与此实体一对一关联的实体的联级样式类型。联级样式上当对实体进行操作时的策略。
+
+说明：在定义关系时经常会涉及是否定义Cascade(级联处理)属性，担心造成负面影响.
+·不定义,则对关系表不会产生
+任何影响
+·CascadeType.PERSIST （级联新建）
+
+·CascadeType.REMOVE （级联删除）
+
+·CascadeType.REFRESH （级联刷新）
+
+·CascadeType.MERGE （级联更新）中选择一个或多个。
+·还有一个选择是使用CascadeType.ALL ，表示选择全部四项
+
+# fetch属性是该实体的加载方式，有两种：LAZY和EAGER。
+
+# optional属性表示关联的实体是否能够存在null值。默认为true，表示可以存在null值。如果为false，则要同时配合使用@JoinColumn标记。
+
+# mappedBy属性用于双向关联实体时，标注在不保存关系的实体中。
+在四种关联关系
+
+关联指定列 （@JoinColumn）
+
+# @JoinColumn 用于注释表中的字段，与 @Column不同的是它要保存表与表之间关系的字段；
+
+# name属性是用来标记表中对应的字段的名称。
+如果不设置name的值，默认情况下，name的取值规则如下
+：name=关联的表的名称 + "_" + 关联表主键的字段名
+# 默认情况下，关联的实体的主键一般用来做外键的。
+如果不想用主键作为外键，则需要设置referencedColumnName属性，
+如： 
+@JoinColumn(name="address_id", referencedColumnName="ref_id")
+
+# @JoinColumn可以与 @OneToOne、@ManyToOne 或 @ManyToMany标记同时使用
+
+
+spring boot 获取控制器参数的几种方式
+  1. 无注解下获取参数
+	url :  http://localhost:8080/param/noannotation?name=zhangsan&age=14&score=89.1
+	无注解下获取参数，需要控制器层参数与HTTP请求栏参数名称一致，这样后台就可以获取到请求栏的参数。
+	如果我们不给参数赋值，那么spring会将空着的参数默认按照String型空字符串处理。所以，如果是String型的参数
+	，为空时不报错的；若是非String型参数，则必须非空。
+  
+  2. 使用@RequestParam获取参数
+	例: @RequestMapping(value="/test")
+		@RespongseBody
+		public String test(@RequestParam("aaa") String aac,@RequestParam("bbb") String bbb){
+			return aac+ bbb;
+		}
+	这种方式是通过url路径的形式将请求路径上的参数绑定到方法的参数上，简单来说就是实参值赋给相应的形参，
+　　启动主程序，访问该请求，浏览器出现下面这个表明注入参数成功，这里可以通过指定RequestParam的value值来
+	指定url请求路径参数指定注入到哪个具体方法参数，不过一般两者名字一致比较方便 
+
+  
+  3. 通过Servlet来获取前端页面参数
+    通过HttpServletRequest等来获取前端页面参数，代码见下图 ，简单来说就是通过调用request的
+	getParameter方法来获取参数，比如访问路径类似这样http://localhost:8080/0919/test2?firstName=zhang&lastName=san 
+	如在方法中参数:  public String test(HttpServletRequest request){ 方法体 }
+	
+  4. 通过PathVariable注解来绑定请求路径的参数
+    例: @RequestMapping(value="/test/{a}/{bbb}")
+		@RespongseBody
+		public String test(@Pathvariable("a") String aaa, @PathVariable String bbb){
+			return aaa + bbb;
+		}
+	这种情况简单来说就是url中采用动态绑定的形式表示，之后在方法中指定的参数通过PathVariable来将请求的url中的参数绑定
+	到方法参数，这里在不指定PathVariable注解的具体值时按照请求路径中的动态变量顺序与注解顺序一致即可注入 ，如果想指
+	定注入，那么指定PathVariable注解的值与动态变量的名一致即可特定注入。
+	比如请求路径是这个http://localhost:8080/0919/test4/111/222
+
+　　启动主程序，在浏览器访问，出现下图表明注入参数成功 
+  5. 通过ModelAttribute方式注入参数
+    @RequestMapping(value="/kkk", method = RequestMethod.POST)
+	public String kkk(){
+		return "test";
+	}
+	
+	@RequestMapping(value="/test6")
+	public String test6(@ModelAttribute("kkk") Student s){
+		return "test";
+	}
+	简单来说就是通过ModelAttribute注解将请求参数封装到指定的JavaBean对象，同时通过value值将这个接受了表单参数的对象
+	赋给value，这里就是将s赋给了一个变量名为kkk的存在，之后就可以在jsp页面通过这个变量名使用el表达式来获取从表单传
+	过来的参数，这里测试路径是http://localhost:8080/0919/kkk
+
+	
+  spring AOP 注解
+    @Pointcut
+      execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern)throws-pattern?) 
+      括号中各个pattern分别表示：
+      修饰符匹配（modifier-pattern?）
+      返回值匹配（ret-type-pattern）可以为*表示任何返回值,全路径的类名等
+      类路径匹配（declaring-type-pattern?）
+      方法名匹配（name-pattern）可以指定方法名 或者 *代表所有, set* 代表以set开头的所有方法
+      参数匹配（(param-pattern)）可以指定具体的参数类型，多个参数间用“,”隔开，各个参数也可以用“*”来表示匹配任意类型的参数，如(String)表示匹配一个String参数的方法；(*,String) 表示匹配有两个参数的方法，第一个参数可以是任意类型，而第二个参数是String类型；可以用(..)表示零个或多个任意参数
+      异常类型匹配（throws-pattern?）
+      其中后面跟着“?”的是可选项
+        1）execution(* *(..))  
+        //表示匹配所有方法  
+        2）execution(public * com.savage.service.UserService.*(..))  
+        //表示匹配com.savage.server.UserService中所有的公有方法  
+        3）execution(* com.savage.server..*.*(..))  
+        //表示匹配com.savage.server包及其子包下的所有方法 
+        
+        在Spring 2.0中，Pointcut的定义包括两个部分：Pointcut表示式(expr  ession)和Pointcut签名(signature)
+
+        //Pointcut表示式
+        //Point签名
+        @Pointcut("execution(* com.savage.aop.MessageSender.*(..))")
+        private void log(){} 
+        然后要使用所定义的Pointcut时，可以指定Pointcut签名
+        如下：
+        @Before("log()")
+        这种使用方式等同于以下方式，直接定义execution表达式使用
+
+        @Before("execution(* com.savage.aop.MessageSender.*(..))")
+        Pointcut定义时，还可以使用&&、||、! 这三个运算
+        
+
+        Pointcut定义时，还可以使用&&、||、! 这三个运算
+
+        @Pointcut("execution(* com.savage.aop.MessageSender.*(..))")
+        private void logSender(){}
+
+        @Pointcut("execution(* com.savage.aop.MessageReceiver.*(..))")
+        private void logReceiver(){}
+
+        @Pointcut("logSender() || logReceiver()")
+        private void logMessage(){}
+    
+    @Aspect 声明是一个切面
+
+    @After、@Before、@Around 定义建言(advice), 可直接将拦截规则(切点)作为参数
+    
+    其中 @After、@Before、@Around 参数的拦截规则为切点(Pointcut), 为了使切点
+    复用, 可使用@Pointcut 专门定义拦截规则, 然后在@After、@Before、@Around
+    的参数中调用.
+    符合条件的每一个被拦截处为连接点(JoinPoint).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

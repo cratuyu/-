@@ -1,0 +1,84 @@
+数组的长度是固定的；集合的长度是可变的
+
+
+List接口和Set接口都继承了Collection接口 因此这些方法对List和Set
+是通用的add(E e) remove(Object o) isEmpty() iterator() size()
+Iterator 的next()方法返回的是 Object 所以再对返回值进行操作时 需要先进行类型强转
+
+List接口中新增的两个最重要的方法 
+  get(int index)： 获得指定索引位置的元素
+  set(int index,Object obj): 将集合中指定索引位置的对象修改为指定的对象
+
+  List接口的常用实现类有ArrayList与LinkedList
+    ArrayList类实现了可变的数组，允许保存所有元素， 包括null，并可以根据索引
+    位置对集合进行快速的随机访问；缺点是向指定的索引位置插入对象或删除对象的
+    速度较慢。
+    LinkedList类采用链表结构保存对象。这种结构的优点是便于向集合中插入和删除对
+    象，需要经常向集合中插入，删除对象时，使用LinkedList类实现的List集合的效率
+    较高；但对于随机访问集合中的对象，使用LinkedList实现类实现List集合的效率较低
+
+
+Set 集合中的对象不按特定的方式排序， 只是简单地把对象加入集合中，但Set集合中不能
+包含重复对象。 Set集合由Set接口和Set接口的实现类组成。
+
+  Set接口常用的实现类有HashSet类与TreeSet类。
+    HashSet类实现Set接口，由哈希表（实际上是一个HashMap实例）支持。它不保证Set的
+    迭代顺序，特别是它不保证该顺序恒久不变。此类允许使用null元素。
+    TreeSet类不仅实现了Set接口， 还实现了java.util.SortedSet接口，因此，TreeSet类
+    实现的Set集合在遍历集合时按照自然顺序递增排序，也可以按照指定比较器递增排序
+    ，即可以通过比较器对用TreeSet类实现的Set集合中的对象进行排序。TreeSet类新增的
+    first() 返回此Set中当前第一个元素
+    last() 。。。。。最后一个。。
+    comparator() 返回对此Set中的元素进行排序的比较器。如果此Set使用自然顺序，则返回null
+    headSet(E toElement) 返回一个新的Set集合，新集合是toElement（不包含）之前的所有对象
+    subSet(E fromElement,E fromElement)返回一个新的Set集合， 是fromElement（包含）对象
+    与fromElement（不包含）对象之间的所有对象
+    tailSet(E fromElement) 返回一个新的Set集合， 新集合包含对象fromElement（包含）之后
+    的所有对象
+
+
+Map接口提供了将key映射到值的对象。一个映射不能包含重复的key，每个key最多只能映射到一个
+值。Map接口中同样提供了集合的常用方法，并包含下列方法。
+
+    put(K key， V value)  向集合中添加指定的key与value的映射关系
+    containsKey(Object key) 如果此映射包含指定key的映射关系，则返回true
+    containsValue(Object value) 如果此映射将一个或多个key映射到指定值，则返回true
+    get(Object key) 如果存在指定的key对象，则返回该对象对应的值，否则返回null
+    keySet() 返回该集合中的所有key对象形成的Set集合
+    values() 返回该集合中所有值对象形成的Collection集合
+
+    Map接口常用的实现类有HashMap和TreeMap。建议使用HashMap类实现Map集合，因为由
+    HashMap类实现的Map集合添加和删除映射关系效率更高。HashMap是基于哈希表的Map
+    接口的实现，HashMap通过哈希码对其内部的映射关系进行快速查找；而TreeMap中的
+    映射关系存在一定顺序，如果希望Map集合中的对象也存在一定的顺序，应该使用
+    TreeMap类实现Map集合
+
+    HashMap类是基于哈希表的Map接口的实现, 此实现提供所有可选的映射操作, 并允许使用null值和
+    null键, 但必须保证键的唯一性. HashMap通过哈希表对其内部的映射关系进行快速查找. 此类不保证
+    映射的顺序, 特别是它不保证该顺序恒久不变
+    TreeMap类不仅实现了Map接口, 还实现了 java.util.SortedMap接口 , 因此, 集合中的映射关系
+    具有一定的顺序. 但在添加 删除和定位映射关系时, TreeMap类比 HashMap类 性能稍差. 由于TreeMap
+    类实现的Map集合中的映射关系是根据键对象按照一定的顺序排列的, 因此不允许键对象是null
+    TreeMap类实现的Map集合, 键对象升序
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

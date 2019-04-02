@@ -20,7 +20,10 @@ public class WrapperString {
         WrapperString ws2 = new WrapperString("aaaaa");
         String s1 = "aaaaafdsfsd";
         String s2 = "aaaaafdsfsd";
-        hashSet.add(ws1);hashSet.add(ws2);hashSet.add(s1);hashSet.add(s2);
+        hashSet.add(ws1);
+        hashSet.add(ws2);
+        hashSet.add(s1);
+        hashSet.add(s2);
         System.out.println(hashSet.size());
     }
 }
