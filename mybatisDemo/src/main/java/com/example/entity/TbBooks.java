@@ -2,6 +2,7 @@ package com.example.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.LinkedList;
 
 /**
  * Company: www.leadmap.net
@@ -11,7 +12,6 @@ import java.io.Serializable;
  * @Date: 2019/4/2 13:24
  */
 public class TbBooks implements Serializable {
-
 
     private long id;
 

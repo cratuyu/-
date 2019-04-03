@@ -18,4 +18,5 @@
     <select id="findBookById" resultMap="TbBooks">
         select * from tb_books where id = #{id}
     </select>
+
 </mapper>
