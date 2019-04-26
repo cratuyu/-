@@ -38,6 +38,9 @@ public class GetData {
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * 可以通过redisTemplate 操作redis中的数据
+     */
     @Autowired
     @Qualifier("SelfRedisTemplate")
     RedisTemplate<String,String> redisTemplate;
