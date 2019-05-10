@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,12 +56,13 @@ public class TestController {
         return tbBooks;
     }
 
+    @Cacheable("house-key")
     @GetMapping("findAnjvkeByPriceAndSize")
     @ApiOperation(value="获取房子信息", notes="获取数据库中房子信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "size1", value = "最小值", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "size2", value = "最大值", required = true, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "price", value = "价格", paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "price", value = "价格", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "pageNumber", value = "分页页数", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "分页大小", required = true, paramType = "query", dataType = "int"),
     }
