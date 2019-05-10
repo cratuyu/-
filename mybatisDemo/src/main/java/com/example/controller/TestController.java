@@ -2,13 +2,14 @@ package com.example.controller;
 
 import com.example.dao.AnjvkeDao;
 import com.example.dao.TbBooksDao;
+import com.example.dao.AnjvkeDonghuMapper;
 import com.example.entity.Anjvke;
 import com.example.entity.TbBooks;
+import com.example.entity.AnjvkeDonghu;
+import com.example.service.TestService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Company: www.leadmap.net
@@ -32,8 +32,14 @@ public class TestController {
     @Resource
     private TbBooksDao tbBooksDao;
 
+    @Autowired
+    private TestService testService;
+
     @Resource
     private AnjvkeDao anjvkeDao;
+
+    @Resource
+    private AnjvkeDonghuMapper anjvkeDonghuMapper;
 
     @RequestMapping("/findBookById")
     public TbBooks findBook(){
@@ -67,5 +73,14 @@ public class TestController {
         int n = Integer.parseInt(request.getParameter("pageSize"));
         int m = pageNumber * n;
         return anjvkeDao.findByPriceAndSize(price, size1, size2, m, n);
+    }
+
+    @GetMapping("findById")
+    @ApiOperation(value="获取东湖区房子信息",notes = "获取东湖区某房子信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "id", required = true, paramType = "query",dataType = "Integer")}
+    )
+    public AnjvkeDonghu findAnjvkeDonghu(Integer id){
+        return anjvkeDonghuMapper.selectByPrimaryKey(id);
     }
 }

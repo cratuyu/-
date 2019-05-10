@@ -9,7 +9,6 @@ package test.dataStructrue;
  */
 public class ArrayList<T> {
 
-
     private Object[] data = null; // 用来保存此线性表中内容的数组
     private int current; // 保存当前为第几个元素的指标
     int capacity;   // 表示数组大小的指标
@@ -39,7 +38,7 @@ public class ArrayList<T> {
         if(cur == this.capacity){
             this.capacity = this.capacity * 2;
             Object[] newdata = new Object[this.capacity];
-            for(int i = 0; i <= this.data.length;i++ ){
+            for(int i = 0; i <= this.data.length; i++ ){
                 newdata[i] = this.data[i];
             }
             this.data = newdata;

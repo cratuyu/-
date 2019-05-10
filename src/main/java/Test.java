@@ -27,19 +27,11 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 public class Test {
 
     public static void main(String[] args){
-        try {
-            new Thread(()->{
-                try {
-                    Thread.sleep(1000);
-                    System.out.println("!!");
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }
-            }).start();
-        }catch (Exception e){
-            e.printStackTrace();
+        for (int i = 0; i < 5;i++){
+            String s = "*";
+            int x = 2 * 5;
+            System.out.println(x);
         }
-        System.out.println("??");
     }
 
     public static String encrypt(String content, String password) {
@@ -70,7 +62,6 @@ public class Test {
             System.out.println("16进制的密文："  + hexStrResult);
             String result1 = new String(result,"utf-8");
             return result1;
-
 
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();

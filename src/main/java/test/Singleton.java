@@ -20,6 +20,7 @@ public class Singleton {
 class Singleton1{
     private static Singleton1 singleton = new Singleton1();
 
+    // 限制在其他类中使用 new 关键字创建对象
     private Singleton1(){
     }
 
